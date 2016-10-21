@@ -36,6 +36,7 @@ public class GameGrid {
         grid[3][3] = 1;
         grid[4][4] = 1;
     }
+    
     /**
      * returns the grid.
      * @return 
@@ -59,18 +60,27 @@ public class GameGrid {
             }
         }
     }
+    /**
+     * adds a chip(an integer) to the grid.  
+     * @param move 
+     */
     public void add(Move move){
         add(move.getX(), move.getY(), move.getId());
     }
-    
+    /**
+     * adds a an integer to the grid
+     * @param x
+     * @param y
+     * @param value 
+     */
     public void add(int x, int y, int value){
         if(grid[x][y] != 0){
             System.out.println("Square is taken");
             return;
         }
-        if (isLegalMove(value, x ,y))
+//        if (isLegalMove(value, x ,y))
             addToGrid(value, x, y);
-        else System.out.println("LOL NOPE");
+        /*else*/ System.out.println("LOL NOPE");
     }
     
     public boolean isLegalMove(Move move){
@@ -123,6 +133,11 @@ public class GameGrid {
         }
         else return false;
     }
+    /**
+     * checks if a player has any possible moves to make
+     * @param player
+     * @return 
+     */
     public boolean checkForLegalMoves(int player){
 //        if(player != 1 && player != 2)            add later
         for (int i = 0; i < 8; i++) {
@@ -133,10 +148,18 @@ public class GameGrid {
         }
         return false;
     }
+    /**
+     * checks if either player can make a move
+     * @return 
+     */
     public boolean checkForLegalMoves(){
         return(checkForLegalMoves(1) || checkForLegalMoves(2));
     }
-    
+    /**
+     * returns an array with every legal move available to the player
+     * @param player
+     * @return 
+     */
     public Move[] getLegalMoves(int player){
         ArrayList<Move> legalMoves = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
@@ -148,7 +171,11 @@ public class GameGrid {
         }
         return (Move[])legalMoves.toArray();
     }
-
+    /**
+     * returns the number of points a player has
+     * @param player
+     * @return
+     */
     public int getScore(int player){
         int playerScore = 0;
         for (int i = 0; i < 8; i++) {
@@ -159,7 +186,10 @@ public class GameGrid {
         }
         return playerScore;
     }
-    
+    /**
+     * returns the winning player, or a 0 if a draw
+     * @return 
+     */
     public int getWinner(){
         int player1 = getScore(1);
         int player2 = getScore(2);
