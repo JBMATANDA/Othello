@@ -28,5 +28,4 @@ public class Move {
     public int getId(){
         return markerId;
     }
-    
 }
