@@ -21,6 +21,7 @@ public class GameManager {
         board = new GameGrid();
         in = new Scanner(System.in);
     }
+    
     public void run(){
         int resetter = -1;
         int x = resetter;
