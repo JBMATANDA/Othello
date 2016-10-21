@@ -28,4 +28,25 @@ public class Move {
     public int getId(){
         return markerId;
     }
+    
+    /**
+     * This is a template for users that would rather use the Move class as an 
+     * ADT, this extracts the data and can be used as a wrapper class.
+     * Just replace doAction() with the correct method.
+     */
+    /*
+        private void moveAdapter(Move move){
+            int x = move.getX();
+            int y = move.getY();
+            int player = move.getId();
+            doAction(x,y,player);
+        }
+    
+            private void moveAdapter2(Move move, Method method){
+            int x = move.getX();
+            int y = move.getY();
+            int player = move.getId();
+            method.invoke(x,y,player);
+        }
+    */
 }
