@@ -21,13 +21,13 @@ public class GameFrame {
 
     public GameFrame(Stage primaryStage) {
         BorderPane pane = new BorderPane();
-        pane.setCenter(board.getGameBoard());
+        pane.setCenter(board.getGameBoard());// Ändra 
         Scene scene = new Scene(pane, 500, 500);
         primaryStage.setTitle("Othello");
         primaryStage.setScene(scene);
         pane.setLeft(getVBox());
         pane.setCenter(board.getGameBoard()); 
-        primaryStage.show();
+        
     }
 
     private VBox getVBox() {

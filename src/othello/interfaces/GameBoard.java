@@ -48,7 +48,7 @@ public class GameBoard {
         return this.pane;
     }
     
-    class Cell extends Pane{
+class Cell extends Pane{
         private int row, column;
          
         public Cell(){        
@@ -56,7 +56,7 @@ public class GameBoard {
            this.row = row; 
            this.setStyle("-fx-border-color: black");
             this.setPrefSize(500,500);
-        }
+       }
     public Ellipse setPiece(int markerID){
         Ellipse piece = new Ellipse(this.getWidth()/2,
                 this.getHeight()/2, this.getWidth()/2 - 10,
@@ -87,8 +87,8 @@ public class GameBoard {
         return piece;
     } 
    
-    private void handleMouseClick(){
+private void handleMouseClick(){
         
-    }
-    }
+}
+}
 }
