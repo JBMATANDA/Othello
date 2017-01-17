@@ -8,35 +8,51 @@ Vi kommer att kika på hur man skapar smartare datorspelare i kursen intelligent
  */
 package participants;
 
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.property.ObjectProperty;
 import othello.Move;
 
 /**
  *
- * @author optimusprime
+ * @author S153298
  */
 public class ComputerPlayer extends Player{
-    int x;
-    int y;
+    Random rng = new Random();
     
     public ComputerPlayer(String name, int markerId){
-        setName(name);
-        setMarkerId(markerId);
-        x = 0;
-        y = 0;
+        super(name, markerId);
     }
 
     @Override
-    public Move getMove() {
-        int[] move = new int[3];
-        move[2] = getMarkerId();
-        if(y >= 8){            
-            x++;
-            y = y % 8;
+    public void getMove(Move[] moveList, ObjectProperty<Move> playerMadeMove) {
+        
+        
+        new Thread(new MoveMaker(moveList, playerMadeMove)).start();
+    }
+    
+    private class MoveMaker implements Runnable{
+
+        private Move[] moveList;
+        private ObjectProperty<Move> playerMadeMove;
+        
+        public MoveMaker(Move[] moveList, ObjectProperty<Move> playerMadeMove){
+            this.moveList = moveList;
+            this.playerMadeMove = playerMadeMove;
         }
-        move[1] = y++;
-        x = x % 8;
-        move[0] = x;
-        Move realMove = new Move(move[0] ,move[1],move[2]);
-        return realMove;
+        
+        @Override
+        public void run() {
+            printMoveList(moveList);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ComputerPlayer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            int selectedMove = rng.nextInt(moveList.length);
+            System.out.println(moveList[selectedMove].getX()+ " " + moveList[selectedMove].getY());
+            playerMadeMove.set(moveList[selectedMove]);
+        }
     }
 }
