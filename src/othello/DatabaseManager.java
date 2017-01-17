@@ -25,12 +25,12 @@ import java.sql.Statement;
  */
 public class DatabaseManager {
     
-    public static void addStuff(int groupId, String ipAdress, int port){
+    
+    private static void sendSQLMessage(String SQLMessage){
         try{
             Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
             Statement statement = connection.createStatement();
 
-            String SQLMessage = "insert into OthelloServer (groupId, ipAddress, port) VALUES ('"+groupId+"', '"+ipAdress+"', '"+port+"');";
             statement.executeUpdate(SQLMessage);
             connection.close();
         }
@@ -38,5 +38,10 @@ public class DatabaseManager {
         {
             System.out.print(ex.getMessage());
         } 
+    }
+    
+    public static void addStuff(int groupId, String ipAdress, int port){
+        String SQLMessage = "insert into OthelloServer (groupId, ipAddress, port) VALUES ('"+groupId+"', '"+ipAdress+"', '"+port+"');";
+        sendSQLMessage(SQLMessage);
     }
 }
