@@ -12,7 +12,7 @@ import participants.*;
  * @author S153298
  */
 public class Othello{
-    
+    //Just testing
     
     
     /**
