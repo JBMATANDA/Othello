@@ -14,10 +14,29 @@ Den lagrade proceduren GetConnectionDetails skall anropas via en CallableStateme
  */
 package othello;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author S153298
  */
 public class DatabaseManager {
     
+    public static void addStuff(int groupId, String ipAdress, int port){
+        try{
+            Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
+            Statement statement = connection.createStatement();
+
+            String SQLMessage = "insert into OthelloServer (groupId, ipAddress, port) VALUES ('"+groupId+"', '"+ipAdress+"', '"+port+"');";
+            statement.executeUpdate(SQLMessage);
+            connection.close();
+        }
+        catch (SQLException ex)
+        {
+            System.out.print(ex.getMessage());
+        } 
+    }
 }

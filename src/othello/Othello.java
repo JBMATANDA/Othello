@@ -19,7 +19,12 @@ public class Othello{
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+        /*
+        int groupId = 1;
+        String ipAdress = "193.10.247.46";
+        int port = 56000;
+        DatabaseManager.addStuff(groupId, ipAdress, port);
+        */
         GameManager gm = new GameManager(new HumanPlayer("John", 1), new ComputerPlayer("Carlos", 2));
         gm.run();
     }
