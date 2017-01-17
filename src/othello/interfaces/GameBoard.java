@@ -86,15 +86,7 @@ public class GameBoard {
         } 
         return piece;
     } 
-    
-    class Cell extends Pane{
-        
-        public Cell(){
-            setStyle("-fx-border-color: black"); 
-            this.setPrefSize(2000,2000); 
-            this.setOnMouseClicked(e -> handleMouseClick()); 
-        }
-    }
+   
     private void handleMouseClick(){
         
     }
