@@ -51,6 +51,4 @@ public  abstract class Player {
             System.out.println("X: " + moveList[i].getX() + " Y: " + moveList[i].getY());
         }
     }
-    
-    
 }
