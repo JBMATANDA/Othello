@@ -20,7 +20,7 @@ public class Othello{
      */
     public static void main(String[] args) {
         
-        GameManager gm = new GameManager(new ComputerPlayer("John", 1), new ComputerPlayer("Carlos", 2));
+        GameManager gm = new GameManager(new HumanPlayer("John", 1), new ComputerPlayer("Carlos", 2));
         gm.run();
     }
 }
