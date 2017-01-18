@@ -79,7 +79,7 @@ public class DatabaseManager {
             return "Error";
         }
     }
-    
+    /*
     public static String getIpAddress(){
         try {
             Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
@@ -99,13 +99,12 @@ public class DatabaseManager {
             return "Error";
         }
     }
+    */
     
-    
-        public static String getIpAddress(int groupId){
+    private static String getIpAddress(int groupId){
         try {
             Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
             Statement statement = connection.createStatement();
-            
             
             String SQLMessage = "select* from OthelloServer where groupId = " + groupId;
             
@@ -121,7 +120,7 @@ public class DatabaseManager {
         }
     }
     
-    
+    /*
     public static String getPort(){
         try {
             Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
@@ -140,7 +139,8 @@ public class DatabaseManager {
             return "Error";
         }
     }
-    public static String getPort(int groupId){
+    */
+    private static String getPort(int groupId){
         try {
             Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
             Statement statement = connection.createStatement();
@@ -159,7 +159,21 @@ public class DatabaseManager {
         }
     }
     
-   
+    
+    
+    /**
+     * [0] = ipAddress
+     * [1] = port number
+     * @param groupId
+     * @return 
+     */
+    
+    public static String[] GetConnectionDetails(int groupId){
+        String[] details = new String[2];
+        details[0] = getIpAddress(groupId);
+        details[1] = getPort(groupId);
+        return details;
+    }
     
     
     public static void addClient(int groupId, String ipAdress, int port){
