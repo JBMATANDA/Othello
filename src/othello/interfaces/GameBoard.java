@@ -13,40 +13,31 @@ import javafx.scene.shape.Ellipse;
 
 public class GameBoard {
 
-    private Pane[][] cell;
+    private Cell[][] cell;
     private Label status;
     private GridPane pane;
 
     public GameBoard(){
-        cell = new Pane[8][8];
+        cell = new Cell[8][8];
         status = new Label("Black's turn to play");
         pane = new GridPane();
     }
 
     //Skapa spelbärdan.. Påminelse till Bosco Använd GridPane Istället
 
-    public void createBoard() {
+    public GridPane createBoard() {
 
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 pane.add(cell[row][column] = new Cell(), column, row);
             
-                if (column % 2 == 0) {
-                    cell[row][column].setPrefSize(2000, 2000);
-                    cell[row][column].setMinSize(200, 200);
-                    cell[row][column].setStyle("-fx-background-color: black;");
-                } else {
-                    cell[row][column].setMinSize(200, 200);
-                    cell[row][column].setPrefSize(2000, 2000);
-                    cell[row][column].setStyle("-fx-background-color: white;");
-                }
+      
             }
         }
+        return pane;
     }
     
-    public GridPane getGameBoard(){
-        return this.pane;
-    }
+
     
 class Cell extends Pane{
         private int row, column;
@@ -55,7 +46,7 @@ class Cell extends Pane{
            this.column = column; 
            this.row = row; 
            this.setStyle("-fx-border-color: black");
-            this.setPrefSize(500,500);
+            this.setPrefSize(1500,1500);
        }
     public Ellipse setPiece(int markerID){
         Ellipse piece = new Ellipse(this.getWidth()/2,
