@@ -99,7 +99,8 @@ public class ClientOthello extends Application {
        
        try {
            
-           String portNo = DatabaseManager.getPort();
+           
+           String portNo = DatabaseManager.GetConnectionDetails(1)[1];
            int portNumber = Integer.parseInt(portNo);
            Socket socket = new Socket("localhost", portNumber);
            
