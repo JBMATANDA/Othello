@@ -8,9 +8,12 @@ package participants;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Random;
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;
+import othello.Move;
 
 /**
  *
@@ -18,13 +21,14 @@ import javafx.scene.control.TextArea;
  */
 public class ClientService implements Runnable {
     
-    Socket clientSocket = new Socket();
-    TextArea textArea = new TextArea();
+    Socket clientSocket;// = new Socket();
+    //TextArea textArea = new TextArea();
+    Random random = new Random();
     
-    public ClientService(Socket inputSocket, TextArea inputTextArea){
+    public ClientService(Socket inputSocket/*, TextArea inputTextArea*/){
         
         clientSocket = inputSocket;
-        textArea = inputTextArea;
+        //textArea = inputTextArea;
     }    
     
     @Override public void run(){
@@ -33,18 +37,24 @@ public class ClientService implements Runnable {
             
             DataInputStream inputFromClient = new DataInputStream(clientSocket.getInputStream()); 
             DataOutputStream outputToClient = new DataOutputStream(clientSocket.getOutputStream());
-            
-            while(true){
+            System.out.println("We're not even in the loop");
+            while(clientSocket.isConnected()){                
                 
+                System.out.println("Nevermind, loop achieved");
                 int input = inputFromClient.readInt();
-                int result = input * input;
-                outputToClient.writeInt(result);
+                System.out.println("The input to clientservice:  " + input);
                 
-                Platform.runLater( () -> {
+                int result = random.nextInt(input);
+                System.out.println("The output from clientservice:  " + result);
+                
+                outputToClient.write(result);
+                System.out.println("I think we wrote it");
+                
+            /*    Platform.runLater( () -> {
                 
                     textArea.appendText("Input from client: " + input + '\n');
                     textArea.appendText("Testing streams...: " + result + '\n');
-                });
+                });*/
             }
             
         } catch(IOException ex){

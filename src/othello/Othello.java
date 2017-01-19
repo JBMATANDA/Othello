@@ -30,8 +30,11 @@ public class Othello extends Application{
     }
     
     public static void main(String[] args) {
-      
-      Application.launch(args);
+        
+        GameManager gm = new GameManager(new HumanPlayer("John",1), new RemoteComputerPlayer("Carlos",2));
+        gm.run();
+        //DatabaseManager.addClient2(6, "2325.45", 5487768);
+        //Application.launch(args);
     }
 }
 

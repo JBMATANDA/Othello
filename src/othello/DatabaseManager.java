@@ -28,7 +28,7 @@ import java.util.logging.Logger;
  */
 public class DatabaseManager {
     
-    
+    /*
     private static void sendSQLMessage(String SQLMessage){
         try{
             Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
@@ -41,7 +41,7 @@ public class DatabaseManager {
         {
             System.out.print(ex.getMessage());
         } 
-    }
+    }*/
     /*
     private static ResultSet receiveResult(String SQLMessage){
         try {
@@ -168,10 +168,7 @@ public class DatabaseManager {
      * @return 
      */
     
-    public static String[] GetConnectionDetails(int groupId){
-        
-        
-        
+    public static String[] getConnectionDetails(int groupId){
         
         String[] details = new String[2];
         details[0] = getIpAddress(groupId);
@@ -179,14 +176,14 @@ public class DatabaseManager {
         return details;
     }
     
-    
+    /*
     public static void addClient(int groupId, String ipAdress, int port){
         String SQLMessage = "insert into OthelloServer (groupId, ipAddress, port) VALUES ('"+groupId+"', '"+ipAdress+"', '"+port+"');";
         sendSQLMessage(SQLMessage);
-    }
+    }*/
     
     
-    public static void addClient2(int groupId, String ipAdress, int port){
+    public static void updateDatabaseTable(int groupId, String ipAdress, int port){
         
         try {
             Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
@@ -194,42 +191,34 @@ public class DatabaseManager {
             
             
             //String SQLMessage = "insert into OthelloServer (groupId, ipAddress, port) VALUES ('"+groupId+"', '"+ipAdress+"', '"+port+"');";
-            String SQLMessage = "select* from OthelloServer where groupId = " + groupId;
+            String SQLMessage = "select* from OthelloServer where groupId = " + groupId + ";";
        
             ResultSet resultSet = statement.executeQuery(SQLMessage);
             if(resultSet.next()){
                 
-                System.out.println("Hello world");
                 
-                SQLMessage = "UPDATE OthelloServer SET ipAddress = " + ipAdress + ", port = " + port +" WHERE groupId = " + groupId;
+                SQLMessage = "UPDATE OthelloServer SET ipAddress = '" + ipAdress + "', port = " + port +" WHERE groupId = " + groupId ;
                 statement.executeUpdate(SQLMessage);
-
             }
             else{
                 
-                System.out.println("Goodbye world");
-
-                
-                SQLMessage = "insert into OthelloServer (groupId, ipAddress, port) VALUES ('"+groupId+"', '"+ipAdress+"', '"+port+"');";
+                //System.out.println("Goodbye world");
+                SQLMessage = "CREATE TABLE OthelloServer ( groupId int NOT NULL, ipAddress VARCHAR(30) NOT NULL, port int NOT NULL, PRIMARY KEY (groupId));";
+                statement.executeUpdate(SQLMessage);
+                SQLMessage = "insert into OthelloServer (groupId, ipAddress, port) VALUES ('" + groupId + "','" + ipAdress + "','" + port + "')";
                 statement.executeUpdate(SQLMessage);
             }
         }
         catch(SQLException ex){
             System.out.print(ex.getMessage());
         }
-        
-        
-        
-        
-        
-        
     }
     
     
     
     
     
-    
+    /*
     private static void checkIfItExists(int groupId){
         try {
             Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
@@ -245,6 +234,6 @@ public class DatabaseManager {
         catch(SQLException ex){
             System.out.print(ex.getMessage());
         }
-    }
+    }*/
 }
     

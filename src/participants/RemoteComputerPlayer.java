@@ -1,84 +1,190 @@
 /*
-Denna klass fungerar som LocalComputerPlayer, fast exekverar i en annan process och kommunicerar med Othelloklienten via sockets.
-När Othello Servern startar, skall den registrera vilken dator (IP-adress) den exekverar på och vilket portnummer dess ServerSocket
-lyssnar på. Denna informationen skall lagras i en MS SQL databas, i en tabell med följande schema:
-OthelloServer(groupId, ipAddress, port)
-När Othello Klienten startar skall den fråga databashanteraren vilket portnummer 
-som används på en given dator (IP-address). Detta portnumret skall RemoteComputerPlayer 
-använda sig av för att koppla upp sig mot Othello Servern. Eftersom både spelare 1 och spelare
-2 kan vara av typ RemoteComputerPlayer, måste Othello Servern hantera detta (varje instans av 
-en datorspelare på Othello Servern skall kommunicera över sin Socket på en egen tråd). 
-Dessutom, när ett spel tar slut eller om Othello Klienten stängs ner, så skall Othello
-Servern upptäcka att klient-Socketen har stängts och avsluta tråden på ett kontrollerat sätt.
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package participants;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.property.ObjectProperty;
+import javafx.scene.control.Label;
 import othello.DatabaseManager;
+import othello.Move;
 
 /**
  *
- * @author optimusprime
+ * @author Carlos
  */
-public class RemoteComputerPlayer extends Application {
+public class RemoteComputerPlayer extends  Player{
     
-    private TextArea textArea = new TextArea();
-    private int clientNo = 0;
-    private int groupNo = 5;
+    DataOutputStream toServer =  null;
+    DataInputStream fromServer = null;
     
-    @Override public void start(Stage primaryStage){
-     
-       Scene scene = new Scene(new ScrollPane(textArea), 450, 195);
-       primaryStage.setTitle("Othello Server");
-       primaryStage.setScene(scene);
-       primaryStage.show();
-       
-       new Thread( () -> {
-           
-           try {
-               
-               ServerSocket serverSocket = new ServerSocket(8000);
-               textArea.appendText("Othello multithreaded Server started...\n");            
-               
-               while(true){
-                   
-                   Socket clientSocket = serverSocket.accept();
-                   clientNo++;
-                   
-                   Platform.runLater( () -> {
-                       
-                       InetAddress clientConnectInfo = clientSocket.getInetAddress();
-                   
-                       textArea.appendText("Starting a thread for client: " + clientNo + '\n');
-                       textArea.appendText("The client's IP address is: " + clientConnectInfo.getHostAddress() + '\n');                       
-                       textArea.appendText("The client is using port nummer: 8000\n");
-                       DatabaseManager.addClient(clientNo, clientConnectInfo.getHostAddress(), 8000);
-                   });
-                   
-                   new Thread(new ClientService(clientSocket, textArea)).start();
-               }
-               
-           } catch (IOException ex) {
-               
-               Logger.getLogger(RemoteComputerPlayer.class.getName()).log(Level.SEVERE, null, ex);
-           }
-           
-       }).start();        
+    
+    //Random rng = new Random();
+    
+    public RemoteComputerPlayer(String name, int markerId){
+        super(name, markerId);
+        try {
+            
+            String[] details = DatabaseManager.getConnectionDetails(1);
+            String ipAdress = details[0];
+            //new ServerOthello();
+            //int portNumber = Integer.parseInt(portNo);
+            int portNumber = Integer.valueOf(details[1]);
+            Socket socket = new Socket(ipAdress, portNumber);
+//            Socket socket = new Socket("localhost", 8000);
+
+            fromServer = new DataInputStream(socket.getInputStream());
+            toServer = new DataOutputStream(socket.getOutputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(RemoteComputerPlayer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void getMove(Move[] moveList, ObjectProperty<Move> playerMadeMove) {
+        
+        new Thread(new MoveMaker(moveList, playerMadeMove)).start();
     }
     
+    private class MoveMaker implements Runnable{
+
+        private Move[] moveList;
+        private ObjectProperty<Move> playerMadeMove;
+        
+        public MoveMaker(Move[] moveList, ObjectProperty<Move> playerMadeMove){
+            this.moveList = moveList;
+            this.playerMadeMove = playerMadeMove;
+        }
+        
+        @Override
+        public void run() {
+            printMoveList(moveList);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ComputerPlayer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            int inputToServer = moveList.length;
+               
+            try {
+                toServer.write(inputToServer);
+                //toServer.flush();
+                //Thread.sleep(1000);
+                System.out.println("Waiting for the move");
+
+                int selectedMove = fromServer.read();
+                System.out.println("This was the selected move index: " + selectedMove);
+                System.out.println(moveList[selectedMove].getX()+ " " + moveList[selectedMove].getY());
+                playerMadeMove.set(moveList[selectedMove]);
+            } catch (IOException ex) {
+                Logger.getLogger(RemoteComputerPlayer.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("IoException in run");
+            }      
+        }
+    }
+}
+    
+/*        
+
+       textFieldX.setOnAction(e -> {
+       
+           try {
+               
+               int inputToServer = Integer.parseInt(textFieldX.getText());
+               
+               toServer.writeInt(inputToServer);
+               toServer.flush();
+               
+               int resultFromServer = fromServer.readInt();
+               
+               textArea.appendText("Your number: " + inputToServer + '\n');
+               textArea.appendText("Result from server\nYour number times itself is: " + resultFromServer);
+               
+               
+           } catch(IOException ex){
+               
+               ex.printStackTrace();
+           }
+       });
+       
+       textFieldY.setOnAction(e -> {
+       
+           try {
+               
+               int inputToServer = Integer.parseInt(textFieldY.getText());
+               
+               toServer.writeInt(inputToServer);
+               toServer.flush();               
+             
+                   
+                Move[] resultFromServer = (Move[])fromServer.readObject();
+                   
+              
+               textArea.appendText("Your number: " + inputToServer + '\n');
+               textArea.appendText("Result from server\nYour number times itself is: " + resultFromServer[0].getX());
+               
+               
+           } catch(IOException ex){
+               
+               ex.printStackTrace();
+           } catch (ClassNotFoundException ex) {
+               Logger.getLogger(RemoteComputerPlayer.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       });
+       
+       try {
+           
+           
+           String portNo = DatabaseManager.GetConnectionDetails(1)[1];
+           int portNumber = Integer.parseInt(portNo);
+           Socket socket = new Socket("localhost", portNumber);
+           
+           fromServer = new ObjectInputStream(socket.getInputStream());
+           toServer = new DataOutputStream(socket.getOutputStream());
+           
+//           Move[] availableMoves = null; //insert valid code here :)
+//           ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
+//           output.writeObject(availableMoves);
+//           
+//           ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
+//           Move choice = (Move)input.readObject();
+                      
+//       } catch(IOException ex){           
+//        
+//           ex.printStackTrace();
+//       } catch (ClassNotFoundException ex) {       
+//            Logger.getLogger(RemoteComputerPlayer.class.getName()).log(Level.SEVERE, null, ex);
+//        }       
+    } catch(IOException ex){
+        
+        ex.printStackTrace();
+        }
+    }   
     public static void main(String[] args){
         
         launch(args);
     }
-}
+
+    @Override
+    public void getMove(Move[] moveList, ObjectProperty<Move> playerMadeMove) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }*/
+
