@@ -33,7 +33,7 @@ import othello.DatabaseManager;
  *
  */
 public class ServerOthello {
-    
+         
 //    private TextArea textArea = new TextArea();
     private int clientNo = 0;
     private int groupNo = 1;

@@ -47,6 +47,7 @@ public class HumanPlayer extends Player{
             int x = in.nextInt();
             System.out.println("Player " + getName() + " Enter y");
             int y = in.nextInt();
+            
             move = new Move(x, y, getMarkerId());
             
             this.playerMadeMove.set(move);

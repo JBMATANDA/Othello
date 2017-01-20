@@ -25,7 +25,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.scene.control.Label;
 import othello.DatabaseManager;
 import othello.Move;
-
+    
 /**
  *
  * @author Carlos
