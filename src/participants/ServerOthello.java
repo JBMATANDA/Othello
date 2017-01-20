@@ -35,7 +35,7 @@ import othello.DatabaseManager;
 public class ServerOthello {
          
 //    private TextArea textArea = new TextArea();
-    private int clientNo = 0;
+//    private int clientNo = 0;
     private int groupNo = 4;
     
     public ServerOthello(){
@@ -62,7 +62,7 @@ public class ServerOthello {
                 ServerSocket serverSocket = new ServerSocket(port);
                 while(true){
                     Socket clientSocket = serverSocket.accept();
-                    clientNo++;
+//                    clientNo++;
                     //Platform.runLater( () -> {
                         //InetAddress clientConnectInfo = clientSocket.getInetAddress();
                         //DatabaseManager.updateDatabaseTable(clientNo, clientConnectInfo.getHostAddress(), port);
