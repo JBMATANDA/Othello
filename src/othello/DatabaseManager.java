@@ -59,8 +59,17 @@ public class DatabaseManager {
     }
     */
     
+    private static DatabaseManager databaseManager = new DatabaseManager();
+    private DatabaseManager(){}
+    public static DatabaseManager getDatabase(){
+        return databaseManager;
+    }
     
-    public static String getGroupId(){
+    
+    
+    
+    
+    public String getGroupId(){
         try {
             Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
             Statement statement = connection.createStatement();
@@ -101,7 +110,7 @@ public class DatabaseManager {
     }
     */
     
-    private static String getIpAddress(int groupId){
+    private String getIpAddress(int groupId){
         try {
             Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
             Statement statement = connection.createStatement();
@@ -140,7 +149,7 @@ public class DatabaseManager {
         }
     }
     */
-    private static String getPort(int groupId){
+    private String getPort(int groupId){
         try {
             Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
             Statement statement = connection.createStatement();
@@ -168,7 +177,7 @@ public class DatabaseManager {
      * @return 
      */
     
-    public static String[] getConnectionDetails(int groupId){
+    public String[] getConnectionDetails(int groupId){
         
         String[] details = new String[2];
         details[0] = getIpAddress(groupId);
@@ -183,7 +192,7 @@ public class DatabaseManager {
     }*/
     
     
-    public static void updateDatabaseTable(int groupId, String ipAdress, int port){
+    public void updateDatabaseTable(int groupId, String ipAdress, int port){
         
         try {
             Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");

@@ -36,7 +36,7 @@ public class ServerOthello {
          
 //    private TextArea textArea = new TextArea();
     private int clientNo = 0;
-    private int groupNo = 1;
+    private int groupNo = 4;
     
     public ServerOthello(){
         
@@ -48,7 +48,7 @@ public class ServerOthello {
         int port =  8000;
         try {
             String ipAdress = InetAddress.getLocalHost().getHostAddress();
-            DatabaseManager.updateDatabaseTable(groupNo, ipAdress, port);
+            DatabaseManager.getDatabase().updateDatabaseTable(groupNo, ipAdress, port);
         } catch (UnknownHostException ex) {
             Logger.getLogger(ServerOthello.class.getName()).log(Level.SEVERE, null, ex);
         }

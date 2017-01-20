@@ -34,6 +34,7 @@ public class RemoteComputerPlayer extends  Player{
     
     DataOutputStream toServer =  null;
     DataInputStream fromServer = null;
+    final int groupId = 4;
     
     
     //Random rng = new Random();
@@ -42,7 +43,7 @@ public class RemoteComputerPlayer extends  Player{
         super(name, markerId);
         try {
             
-            String[] details = DatabaseManager.getConnectionDetails(1);
+            String[] details = DatabaseManager.getDatabase().getConnectionDetails(groupId);
             String ipAdress = details[0];
             //new ServerOthello();
             //int portNumber = Integer.parseInt(portNo);
