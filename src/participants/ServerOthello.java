@@ -30,7 +30,7 @@ import othello.DatabaseManager;
 
 /**
  *
- * @author optimusprime
+ *
  */
 public class ServerOthello {
     

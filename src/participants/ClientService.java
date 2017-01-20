@@ -11,9 +11,11 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;
-import othello.Move;
+
 
 /**
  *
@@ -21,27 +23,32 @@ import othello.Move;
  */
 public class ClientService implements Runnable {
     
-    Socket clientSocket;// = new Socket();
+    Socket clientSocket;
     //TextArea textArea = new TextArea();
     Random random = new Random();
+    DataInputStream inputFromClient;
+    DataOutputStream outputToClient;
     
     public ClientService(Socket inputSocket/*, TextArea inputTextArea*/){
         
-        clientSocket = inputSocket;
-        //textArea = inputTextArea;
+        try {
+            clientSocket = inputSocket;
+            inputFromClient = new DataInputStream(clientSocket.getInputStream());
+            outputToClient = new DataOutputStream(clientSocket.getOutputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(ClientService.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }    
     
     @Override public void run(){
         
         try {
             
-            DataInputStream inputFromClient = new DataInputStream(clientSocket.getInputStream()); 
-            DataOutputStream outputToClient = new DataOutputStream(clientSocket.getOutputStream());
             System.out.println("We're not even in the loop");
             while(clientSocket.isConnected()){                
                 
                 System.out.println("Nevermind, loop achieved");
-                int input = inputFromClient.readInt();
+                int input = inputFromClient.read();
                 System.out.println("The input to clientservice:  " + input);
                 
                 int result = random.nextInt(input);
