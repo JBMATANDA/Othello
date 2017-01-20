@@ -28,190 +28,83 @@ import java.util.logging.Logger;
  */
 public class DatabaseManager {
     
-    /*
-    private static void sendSQLMessage(String SQLMessage){
-        try{
-            Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
-            Statement statement = connection.createStatement();
-
-            statement.executeUpdate(SQLMessage);
-            connection.close();
-        }
-        catch (SQLException ex)
-        {
-            System.out.print(ex.getMessage());
-        } 
-    }*/
-    /*
-    private static ResultSet receiveResult(String SQLMessage){
-        try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
-            Statement statement = connection.createStatement();
-            
-            ResultSet resultSet = statement.executeQuery(SQLMessage);
-            connection.close();
-            return resultSet;
-        }
-        catch(SQLException ex){
-            System.out.print(ex.getMessage());
-            return null;
-        }
-    }
-    */
     
     private static DatabaseManager databaseManager = new DatabaseManager();
     private DatabaseManager(){}
+    
+    /**
+     * This class uses the singleton design pattern, and thus this function is
+     * needed in order to access the database.
+     * @return 
+     */
     public static DatabaseManager getDatabase(){
         return databaseManager;
     }
     
-    
-    
-    
-    
-    public String getGroupId(){
-        try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
-            Statement statement = connection.createStatement();
-            
-            
-            String SQLMessage = "select* from OthelloServer";
-            
-            ResultSet resultSet = statement.executeQuery(SQLMessage);
-            resultSet.next();
-            String stuff = resultSet.getString(1);
-            connection.close();            
-            return stuff;
-        }
-        catch(SQLException ex){
-            System.out.print(ex.getMessage());
-            return "Error";
-        }
-    }
-    /*
-    public static String getIpAddress(){
-        try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
-            Statement statement = connection.createStatement();
-            
-            
-            String SQLMessage = "select* from OthelloServer";
-            
-            ResultSet resultSet = statement.executeQuery(SQLMessage);
-            resultSet.next();
-            String stuff = resultSet.getString(2);
-            connection.close();            
-            return stuff;
-        }
-        catch(SQLException ex){
-            System.out.print(ex.getMessage());
-            return "Error";
-        }
-    }
-    */
-    
-    private String getIpAddress(int groupId){
-        try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
-            Statement statement = connection.createStatement();
-            
-            String SQLMessage = "select* from OthelloServer where groupId = " + groupId;
-            
-            ResultSet resultSet = statement.executeQuery(SQLMessage);
-            resultSet.next();
-            String stuff = resultSet.getString(2);
-            connection.close();            
-            return stuff;
-        }
-        catch(SQLException ex){
-            System.out.print(ex.getMessage());
-            return "Error";
-        }
-    }
-    
-    /*
-    public static String getPort(){
-        try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
-            Statement statement = connection.createStatement();
-            
-            String SQLMessage = "select* from OthelloServer";
-            
-            ResultSet resultSet = statement.executeQuery(SQLMessage);
-            resultSet.next();
-            String stuff = resultSet.getString(3);
-            connection.close();            
-            return stuff;
-        }
-        catch(SQLException ex){
-            System.out.print(ex.getMessage());
-            return "Error";
-        }
-    }
-    */
-    private String getPort(int groupId){
-        try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
-            Statement statement = connection.createStatement();
-            
-            String SQLMessage = "select* from OthelloServer where groupId = " + groupId;
-            
-            ResultSet resultSet = statement.executeQuery(SQLMessage);
-            resultSet.next();
-            String stuff = resultSet.getString(3);
-            connection.close();            
-            return stuff;
-        }
-        catch(SQLException ex){
-            System.out.print(ex.getMessage());
-            return "Error";
-        }
-    }
-    
-    
-    
     /**
-     * [0] = ipAddress
-     * [1] = port number
-     * @param groupId
+     * Returns the contents of a single row and column, with the row being 
+     * identified by its primary key (groupId)
+     * @param groupId - The primary key
+     * @param column - 2 means ipAddress, 3 is port
      * @return 
      */
+    private String getInformation(int groupId, int column){
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
+            Statement statement = connection.createStatement();
+            
+            String SQLMessage = "select* from OthelloServer where groupId = " + groupId;
+            
+            ResultSet resultSet = statement.executeQuery(SQLMessage);
+            resultSet.next();
+            String stuff = resultSet.getString(column);
+            connection.close();            
+            return stuff;
+        }
+        catch(SQLException ex){
+            System.out.print(ex.getMessage());
+            return "Error";
+        }
+    }
     
+    /**
+     * returns a String array with the ip address and port, based of the 
+     * primary key.
+     * [0] = ipAddress
+     * [1] = port number
+     * @param groupId - the primary key
+     * @return 
+     */
     public String[] getConnectionDetails(int groupId){
         
         String[] details = new String[2];
-        details[0] = getIpAddress(groupId);
-        details[1] = getPort(groupId);
+        details[0] = getInformation(groupId, 2); //ip address
+        details[1] = getInformation(groupId, 3); //port
         return details;
     }
     
-    /*
-    public static void addClient(int groupId, String ipAdress, int port){
-        String SQLMessage = "insert into OthelloServer (groupId, ipAddress, port) VALUES ('"+groupId+"', '"+ipAdress+"', '"+port+"');";
-        sendSQLMessage(SQLMessage);
-    }*/
     
-    
+    /**
+     * checks if the table exists, if it doesn't the table gets created. The
+     * table is updated with the entered arguments.
+     * @param groupId
+     * @param ipAdress
+     * @param port 
+     */
     public void updateDatabaseTable(int groupId, String ipAdress, int port){
-        
         try {
             Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
             Statement statement = connection.createStatement();
             
-            
-            //String SQLMessage = "insert into OthelloServer (groupId, ipAddress, port) VALUES ('"+groupId+"', '"+ipAdress+"', '"+port+"');";
             String SQLMessage = "select* from OthelloServer where groupId = " + groupId + ";";
        
             ResultSet resultSet = statement.executeQuery(SQLMessage);
             if(resultSet.next()){
                 
-                
                 SQLMessage = "UPDATE OthelloServer SET ipAddress = '" + ipAdress + "', port = " + port +" WHERE groupId = " + groupId ;
                 statement.executeUpdate(SQLMessage);
             }
             else{
-                
-                //System.out.println("Goodbye world");
                 SQLMessage = "CREATE TABLE OthelloServer ( groupId int NOT NULL, ipAddress VARCHAR(30) NOT NULL, port int NOT NULL, PRIMARY KEY (groupId));";
                 statement.executeUpdate(SQLMessage);
                 SQLMessage = "insert into OthelloServer (groupId, ipAddress, port) VALUES ('" + groupId + "','" + ipAdress + "','" + port + "')";
@@ -222,27 +115,5 @@ public class DatabaseManager {
             System.out.print(ex.getMessage());
         }
     }
-    
-    
-    
-    
-    
-    /*
-    private static void checkIfItExists(int groupId){
-        try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlserver://hitsql-db.hb.se:56077;database=oomuht1604;user=oomuht1604;password=stab66");
-            Statement statement = connection.createStatement();
-            
-            String SQLMessage = "select* from OthelloServer where groupId = " + groupId;
-            
-            ResultSet resultSet = statement.executeQuery(SQLMessage);
-            resultSet.next();
-            String stuff = resultSet.getString(3);
-            connection.close();            
-        }
-        catch(SQLException ex){
-            System.out.print(ex.getMessage());
-        }
-    }*/
 }
     
