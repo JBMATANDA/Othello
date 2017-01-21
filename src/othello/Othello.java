@@ -4,11 +4,10 @@ Othello är spelets huvudklass och (eftersom spelet är en JaxaFX applikation)
  */
 package othello;
 
-import participants.*;
+import javafx.application.Application;
 import javafx.stage.Stage;
-import javafx.scene.*;
-import javafx.application.Application; 
 import othello.interfaces.GameFrame;
+import participants.*;
 
 
 /**
@@ -23,18 +22,23 @@ public class Othello extends Application{
      * @param args the command line arguments
      */
     
-    @Override
-    public void start(Stage primaryStage){
-        GameFrame frame = new GameFrame(primaryStage);
-         primaryStage.show();
-    }
+
     
     public static void main(String[] args) {
         
-        GameManager gm = new GameManager(new RemoteComputerPlayer("John",1), new RemoteComputerPlayer("Carlos",2));
-        gm.run();
+
         //DatabaseManager.addClient2(6, "2325.45", 5487768);
-        //Application.launch(args);
+        Application.launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage){
+        
+        GameManager gm = new GameManager(new HumanPlayer("John",1), new LocalComputerPlayer("Carlos",2));
+        GameFrame frame = new GameFrame(primaryStage, gm.getGameGridProperty());
+        gm.setFrame(frame);
+        gm.run();
+        primaryStage.show();
     }
 }
 

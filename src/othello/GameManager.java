@@ -8,8 +8,11 @@ med skall dynamisk bindning användas vid anrop av spelarnas operationer.
 package othello;
 
 import java.util.Scanner;
+import javafx.application.Application;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.stage.Stage;
+import othello.interfaces.GameFrame;
 import participants.Player;
 
 /**
@@ -20,6 +23,12 @@ public class GameManager {
     private GameGrid board;
     private Scanner in;
     private Player[] playerList;
+    
+    private GameFrame frame;
+    private Stage primaryStage = new Stage();
+    
+    
+    
     
     private ObjectProperty<Move> playerMadeMove = new SimpleObjectProperty<>(); //Property som vi skickar med varje gång en spelare ska göra ett move (dvs vi anropar getmove) i getmove så har vi en set, vilket aktiverar vår lyssnare i run()
     
@@ -41,6 +50,7 @@ public class GameManager {
 
     public GameManager(Player white, Player black){
         board = new GameGrid();
+        
         in = new Scanner(System.in);
         playerList = new Player[2];
         playerList[0] = white;
@@ -61,9 +71,17 @@ public class GameManager {
                 advanceTurn();
             }
         });
-        
+
         board.printBoard();
         playerList[currentPlayer].getMove(board.getLegalMoves(playerList[currentPlayer]), playerMadeMove);          //Sätts längst ner efter lyssnaren, så att lyssnaren ska ha tid att fästa sig. Annars ifall det här kommer först så kan getmove hinna exekvera klart på sin egen tråd innan lyssnaren har satt sig, och då har den inga instruktioner och set() triggar inte något.
+    }
+    
+    
+    public GameGridProperty getGameGridProperty(){
+        return board.gridProperty();
+    }
+    public void setFrame(GameFrame frame){
+        this.frame = frame;
     }
     
     

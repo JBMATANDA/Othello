@@ -17,10 +17,11 @@ import java.util.ArrayList;
 import participants.Player;
 
 public class GameGrid {
-    private int[][] grid;
+    //private int[][] grid;
+    private GameGridProperty gridProperty = new GameGridProperty();
     
     public GameGrid(){
-        grid = new int[8][8];
+        //grid = new int[8][8];
         initializeBoard();
     }
     
@@ -31,21 +32,29 @@ public class GameGrid {
     private void initializeBoard(){
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                grid[i][j] = 0;
+//                grid[i][j] = 0;
+                gridProperty.set(i, j, 0);
             }
         }
+/*       
         grid[3][4] = 2;
         grid[4][3] = 2;
         grid[3][3] = 1;
         grid[4][4] = 1;
+        */
+        
+        gridProperty.set(3, 4, 2);
+        gridProperty.set(4, 3, 2);
+        gridProperty.set(3, 3, 1);
+        gridProperty.set(4, 4, 1);
     }
     
     /**
      * returns the grid.
      * @return 
      */
-    public int[][] getGridStatus(){
-        return grid;
+    public GameGridProperty gridProperty(){
+        return gridProperty;
     }
     /**
      * Prints out the board in a nice, clean and sleek manner. Wow! It's better 
@@ -60,7 +69,9 @@ public class GameGrid {
         for (int i = 0; i < 8; i++) {
             System.out.print(i + "   ");
             for (int j = 0; j < 8; j++) {
-                System.out.print(grid[j][i] + " ");
+//                System.out.print(grid[j][i] + " ");
+                System.out.print(gridProperty.get(i, j) + " ");
+                
             }
             System.out.println();
         }
@@ -71,8 +82,10 @@ public class GameGrid {
     public void printboardSkipZero(){
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (grid[i][j] != 0)
-                System.out.println("x: " + i + "  y: " + j + "  " + grid[i][j]);
+                //if (grid[i][j] != 0)
+                if (gridProperty.get(i,j) != 0)
+                //System.out.println("x: " + i + "  y: " + j + "  " + grid[i][j]);
+                System.out.println("x: " + i + "  y: " + j + "  " + gridProperty.get(i,j));
             }
         }
     }
@@ -95,7 +108,8 @@ public class GameGrid {
     private boolean isLegalMove(int player, int x, int y){
         if((x >= 8) || (y >= 8) || (x < 0) || (y < 0))
             return false;
-        if(grid[x][y] != 0)
+        //if(grid[x][y] != 0)
+        if(gridProperty.get(x, y) != 0)
             return false;
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
@@ -120,7 +134,8 @@ public class GameGrid {
                 legalMoveAndAdd(player, x+i, y+j, i, j, true);
             }
         }
-        grid[x][y] = player;
+        //grid[x][y] = player;
+        gridProperty.set(x, y, player);
     }
     /**
      * part of the legal-move checking. The last argument determines whether or
@@ -136,16 +151,20 @@ public class GameGrid {
     private boolean legalMoveAndAdd(int colour, int x, int y, int directionX, int directionY, boolean addToGrid){
         if ((x >= 8) || (y >= 8) || (x < 0) || (y < 0))
             return false;
-        if (grid[x][y] == 0)
+        //if (grid[x][y] == 0)
+        if (gridProperty.get(x, y) == 0)
             return false;
-        if ((grid[x][y] == colour)){
-            if (grid[x-directionX][y-directionY] != 0)
+        //if ((grid[x][y] == colour)){
+        if ((gridProperty.get(x, y) == colour)){    
+            //if (grid[x-directionX][y-directionY] != 0)
+            if (gridProperty.get(x-directionX,y-directionY) != 0)
                 return true;
             else return false;
         }
         if (legalMoveAndAdd(colour, x+directionX, y+directionY, directionX, directionY, addToGrid)){
             if(addToGrid)
-                grid[x][y] = colour;
+                //grid[x][y] = colour;
+                gridProperty.set(x, y, colour);
             return true;
         }
         else return false;
@@ -212,7 +231,8 @@ public class GameGrid {
         int playerScore = 0;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if(grid[i][j] == player)
+                //if(grid[i][j] == player)
+                if(gridProperty.get(i,j) == player)
                     playerScore++;
             }
         }
