@@ -3,6 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+
+
+
 package participants;
 
 import java.util.concurrent.locks.Condition;
@@ -10,7 +14,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- *
+ * This class is a producer-consumer, used to avoid direct communication between
+ * view and model. The view(GameBoard produces moves through mouseclicks, which
+ * are consumed by the players.
  * @author S153298
  */
 public class GetMove {
@@ -23,6 +29,18 @@ public class GetMove {
     private Integer y = null;
     
     
+    private static final GetMove getMove = new GetMove();
+    public static GetMove getMove(){
+        return getMove;
+    }
+    
+    
+    /**
+     * sets the coordinates which the player clicked on.
+     * @param newX
+     * @param newY
+     * @throws InterruptedException 
+     */
     public void put(int newX, int newY) throws InterruptedException{
         lock.lock();
         try{
@@ -38,6 +56,12 @@ public class GetMove {
         }
     }   
     
+    
+    /**
+     * Takes the coordinates to use as a move, and removes them from the variables
+     * @return
+     * @throws InterruptedException 
+     */
     public int[] take() throws InterruptedException{
         lock.lock();
         
