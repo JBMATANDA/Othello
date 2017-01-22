@@ -7,6 +7,8 @@ package othello.interfaces;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -20,7 +22,7 @@ import participants.GetMove;
 
 public class GameFrame{
 
-
+    private final BooleanProperty gameIsOn = new SimpleBooleanProperty(true);
     private final GameBoard board = new GameBoard();
     private final BorderPane pane = new BorderPane();
     private final VBox vBox; 
@@ -45,9 +47,10 @@ public class GameFrame{
         bindViewToModel(gridProperty);
         //dd = new DrawnDialog(primaryStage);
         
-        
-        
-        
+    }
+    
+    public void bindGameOnProperty(BooleanProperty otherProperty){
+        otherProperty.bindBidirectional(gameIsOn);
     }
     
     public void bindViewToModel(GameGridProperty gridProperty){
@@ -67,8 +70,9 @@ public class GameFrame{
         vBox.getChildren().add(btNew);
         vBox.getChildren().add(btEnd);
         btNew.setOnAction(e -> {
-        SetUpGameDialog setup = new SetUpGameDialog(this.stage);
-        setup.setUpGameDialogFrame();
+            gameIsOn.set(false);
+            SetUpGameDialog setup = new SetUpGameDialog(this.stage);
+            setup.setUpGameDialogFrame();
         });
         btEnd.setOnAction(e -> Platform.exit());
         
