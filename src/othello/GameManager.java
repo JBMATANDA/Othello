@@ -107,12 +107,13 @@ public class GameManager {
         //System.out.println("Winner: " + board.getWinner());
         int winner = board.getWinner();
 
-        //if (winner == 0) {
-//            frame.gameOver();
-/*        } else {
+        if (winner == 0) {
+            frame.gameOver();
+        } else {
             frame.gameOver(playerList[winner - 1].getName());
         }
-*/
+        
+        while(true){}
     }
 
 }

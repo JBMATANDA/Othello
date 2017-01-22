@@ -5,6 +5,7 @@
  */
 package othello.interfaces;
 
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
@@ -16,11 +17,12 @@ public class WinnerDialog {
 
     Alert alert;
 
-    public WinnerDialog(Stage primaryStage, String winner) {
-        alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(winner + " won");
+    public WinnerDialog(String winner) {
+        Platform.runLater(() -> {
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(winner + " won");
 
-        alert.showAndWait();
-
+            alert.showAndWait();
+        });
     }
 }

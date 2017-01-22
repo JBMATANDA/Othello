@@ -1,13 +1,4 @@
-/*
-GameGrid är den klass som innehåller partiets tillstånd (exempelvis en matris).
-När en spelare utför ett drag kommer detta att registreras i GameGriden. 
-Då GameBoard ritar om spelplanen hämtas informationen om partiets aktuella 
-ställning från denna klass.
-Er uppgift blir nu att konstruera och testa dessa klasser. Ett spel avslutas 
-när hela spelplanen är fylld med brickor eller när ingen av spelarna kan 
-utföra ett drag. I båda fallen är det spelaren med mest brickor i sin egen
-färg som har vunnit.
- */
+
 package othello;
 /**
  *
@@ -17,6 +8,9 @@ import java.util.ArrayList;
 import participants.Player;
 
 public class GameGrid {
+    
+    //Den här klassen är ett gränssnit
+    
     //private int[][] grid;
     private GameGridProperty gridProperty = new GameGridProperty();
     

@@ -78,10 +78,10 @@ public class GameFrame{
     
     
     public void gameOver(){
-        new DrawnDialog(new Stage());
+        new DrawnDialog();
     }
     public void gameOver(String winner){
-        new WinnerDialog(new Stage(), winner);
+        new WinnerDialog(winner);
     }
     
     

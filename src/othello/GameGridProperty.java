@@ -15,6 +15,15 @@ import javafx.beans.value.ObservableValue;
  *
  * @author S153298
  */
+
+
+/**
+ * This class contains all the actual grid, and every time a change is made
+ * the GameBoard gets notified
+ * @author S153298
+ */
+
+
 public class GameGridProperty implements ObservableValue<int[][]>{
     
     private List<ChangeListener<? super int[][]>> listeners = new ArrayList<>();
