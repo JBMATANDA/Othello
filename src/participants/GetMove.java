@@ -22,8 +22,6 @@ public class GetMove {
     private Integer x = null;
     private Integer y = null;
     
-
-    
     
     public void put(int newX, int newY) throws InterruptedException{
         lock.lock();
