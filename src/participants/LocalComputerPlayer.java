@@ -50,7 +50,7 @@ public class LocalComputerPlayer extends Player{
         public void run() {
             printMoveList(moveList);
             try {
-                Thread.sleep(1000);
+                Thread.sleep(1);
             } catch (InterruptedException ex) {
                 Logger.getLogger(LocalComputerPlayer.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -35,7 +35,7 @@ public class Othello extends Application{
     @Override
     public void start(Stage primaryStage){
         
-        GameManager gm = new GameManager(new HumanPlayer("John",1), new LocalComputerPlayer("Carlos",2));
+        GameManager gm = new GameManager(new RemoteComputerPlayer("John",1), new RemoteComputerPlayer("Carlos",2));
         GameFrame frame = new GameFrame(primaryStage, gm.getGameGridProperty(), gm.getGetMove());
         gm.setFrame(frame);
         gm.run();
