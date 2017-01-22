@@ -27,14 +27,13 @@ public class Othello extends Application{
     public static void main(String[] args) {
         
 
-        //DatabaseManager.addClient2(6, "2325.45", 5487768);
         Application.launch(args);
     }
 
     @Override
     public void start(Stage primaryStage){
         
-        GameManager gm = new GameManager(new HumanPlayer("John",1), new LocalComputerPlayer("Carlos",2));
+        GameManager gm = new GameManager(new LocalComputerPlayer("John",1), new LocalComputerPlayer("Carlos",2));
         GameFrame frame = new GameFrame(primaryStage, gm.getGameGridProperty());
         gm.setFrame(frame);
         gm.run();

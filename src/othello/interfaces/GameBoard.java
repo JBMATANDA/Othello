@@ -71,7 +71,7 @@ public class GameBoard {
             return coordinatesXY;
         }
 
-        public Ellipse setPiece(int markerID) {
+        private Ellipse setPiece(int markerID) {
             Ellipse piece = new Ellipse(this.getWidth() / 2,
                     this.getHeight() / 2, this.getWidth() / 2 - 10,
                     this.getHeight() / 2 - 10);

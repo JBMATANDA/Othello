@@ -22,14 +22,19 @@ public class GameFrame{
 
     private final GameBoard board = new GameBoard();
     private final BorderPane pane = new BorderPane();
+    private final VBox vBox; 
+    private final Button btEnd = new Button("End Game");
+    private final Button btNew = new Button("New Game");
+    
 
     public GameFrame(Stage primaryStage, GameGridProperty gridProperty) {        
         Scene scene = new Scene(pane, 600, 500);
         primaryStage.setTitle("Othello");
         primaryStage.setScene(scene);
-        
+        vBox = getVBox();
         updateView(gridProperty.getValue());
         bindViewToModel(gridProperty);
+        //DrawnDialog draw = new DrawnDialog(primaryStage);
     }
     
     public void bindViewToModel(GameGridProperty gridProperty){
@@ -39,16 +44,31 @@ public class GameFrame{
     private void updateView(int[][] gameGrid){
         System.out.println("\n\tUPDATING VIEW\t\n");
         pane.setCenter(board.createBoard(gameGrid)); 
+        pane.setLeft(vBox);
     }
     
     private VBox getVBox() {
         VBox vBox = new VBox(15);
         vBox.setPadding(new Insets(15, 15, 15, 15));
         vBox.setStyle("-fx-background-color: darkgreen");
-        vBox.getChildren().add(new Button("New Game"));
-        vBox.getChildren().add(new Button("End Game"));
+        vBox.getChildren().add(btNew);
+        vBox.getChildren().add(btEnd);
+//        btNew.setOnAction();
+//        btEnd.setOnAction();
+        
         return vBox;
     }
+    
+    
+    
+    public void gameOver(){
+        new DrawnDialog(new Stage());
+    }
+    public void gameOver(String winner){
+        new WinnerDialog(new Stage(), winner);
+    }
+    
+    
 
  
 
