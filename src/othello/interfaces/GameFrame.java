@@ -20,6 +20,10 @@ import javafx.scene.Scene;
 import othello.GameGridProperty;
 import participants.GetMove;
 
+/**
+ * This class is our main window.
+ * @author S153298
+ */
 public class GameFrame{
 
     private final BooleanProperty gameIsOn = new SimpleBooleanProperty(true);

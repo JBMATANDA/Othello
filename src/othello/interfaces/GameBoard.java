@@ -10,6 +10,11 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
 import participants.GetMove;
 
+
+/**
+ * This is where the board is represented visually.
+ * @author S153298
+ */
 public class GameBoard {
 
     private Cell[][] cell;
@@ -22,7 +27,6 @@ public class GameBoard {
         pane = new GridPane();
     }
 
-    //Skapa spelbärdan.. Påminelse till Bosco Använd GridPane Istället
 
 
     public GridPane createBoard(int[][] grid) {

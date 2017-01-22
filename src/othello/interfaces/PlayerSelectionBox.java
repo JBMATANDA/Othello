@@ -16,7 +16,7 @@ import participants.Player;
 import participants.RemoteComputerPlayer;
 
 /**
- *
+ * This class is used to help Setupgamedialog.
  * @author S152337
  */
 public class PlayerSelectionBox extends VBox{

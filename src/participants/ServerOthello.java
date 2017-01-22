@@ -23,7 +23,8 @@ import java.util.logging.Logger;
 import othello.DatabaseManager;
 
 /**
- *
+ * This class is needed to start the server. Our main motivation for putting it
+ * in participants was because it was player-related. 
  *
  */
 public class ServerOthello {

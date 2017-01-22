@@ -2,22 +2,21 @@
 package othello.interfaces;
 
 import participants.*;
-import javafx.scene.layout.VBox;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import othello.GameManager;
 
-
+/**
+ * This class is to set up a new game.
+ * Upon clicking the button, a new game is generated.
+ * @author S153298
+ */
 public class SetUpGameDialog {
 
     Player player1, player2;
