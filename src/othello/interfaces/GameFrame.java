@@ -30,8 +30,8 @@ public class GameFrame{
     private final Button btNew = new Button("New Game");
     private final Stage stage; 
     
-    private DrawnDialog dd;
-    private WinnerDialog wd;
+    //private DrawnDialog dd;
+    //private WinnerDialog wd;
     
     
     
@@ -93,7 +93,7 @@ public class GameFrame{
  
 
     //trycker man på NewGame skall spelplanen rensas och starta på nytt.
-
+/*
     class NewGamehandler implements EventHandler<ActionEvent> {
 
         @Override
@@ -111,5 +111,5 @@ public class GameFrame{
         public void handle(ActionEvent e) {
 
         }
-    }
+    }*/
 }
