@@ -25,11 +25,9 @@ public class HumanPlayer extends Player{
 
     @Override
     public void getMove(Move[] moveList, ObjectProperty<Move> playerMadeMove, GetMove getMove) {
-
-
+        
         new Thread(new MoveMaker(moveList, playerMadeMove, getMove)).start();
         
-
     }
     
     private class MoveMaker implements Runnable{
