@@ -8,10 +8,8 @@
 package othello;
 
 import java.util.Scanner;
-import javafx.application.Application;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.stage.Stage;
 import othello.interfaces.GameFrame;
 import participants.GetMove;
 import participants.Player;
@@ -58,8 +56,8 @@ public class GameManager {
     }
 
     public void run() {
-        board.printBoard();
-        playerList[currentPlayer].getMove(board.getLegalMoves(playerList[currentPlayer]), playerMadeMove, getMove);          //Sätts längst ner efter lyssnaren, så att lyssnaren ska ha tid att fästa sig. Annars ifall det här kommer först så kan getmove hinna exekvera klart på sin egen tråd innan lyssnaren har satt sig, och då har den inga instruktioner och set() triggar inte något.
+        //board.printBoard();
+        playerList[currentPlayer].getMove(board.getLegalMoves(playerList[currentPlayer]), playerMadeMove, getMove);
     }
 
     public GameGridProperty getGameGridProperty() {
@@ -77,11 +75,11 @@ public class GameManager {
         this.playerMadeMove.addListener(e -> {                                  //varje gång getMove anropas så aktiveras set(se player-klassen), vilket lyssnaren ser.
             Move move = this.playerMadeMove.get();                              //Inuti får vi ett move-objekt genom get (som fick det från set)
             if (!board.isLegalMove(move)) {
-                System.out.println("Move was not legal! Try again.");
+                //System.out.println("Move was not legal! Try again.");
                 playerList[currentPlayer].getMove(board.getLegalMoves(playerList[currentPlayer]), playerMadeMove, getMove);       //ifall det inte gick så anropar vi getMove, vilket anropar set, som tar oss tillbaka till lyssnaren
             } else {
                 board.addToGrid(move);
-                board.printBoard();
+                //board.printBoard();
                 advanceTurn();
             }
         });
@@ -104,9 +102,9 @@ public class GameManager {
     }
 
     private void gameOver() {
-        System.out.println("Player 1: " + board.getScore(1));
-        System.out.println("Player 2: " + board.getScore(2));
-        System.out.println("Winner: " + board.getWinner());
+        //System.out.println("Player 1: " + board.getScore(1));
+        //System.out.println("Player 2: " + board.getScore(2));
+        //System.out.println("Winner: " + board.getWinner());
         int winner = board.getWinner();
 
         //if (winner == 0) {

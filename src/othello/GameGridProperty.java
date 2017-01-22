@@ -30,13 +30,11 @@ public class GameGridProperty implements ObservableValue<int[][]>{
     }
     
     public void set(int x, int y, int newValue){
-        //System.out.println("ITS CHANGING!");
         gameGrid[x][y] = newValue;
         activateListeners();
     }
     
     private void activateListeners() {
-        //System.out.println("\n\tACTIVATED LISTENER\n");
 
         for(ChangeListener<? super int[][]> listener : listeners){
             listener.changed(this, gameGrid, gameGrid);
