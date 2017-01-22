@@ -66,7 +66,7 @@ public class RemoteComputerPlayer extends  Player{
         
         @Override
         public void run() {
-            printMoveList(moveList);
+            //printMoveList(moveList);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
@@ -77,11 +77,11 @@ public class RemoteComputerPlayer extends  Player{
                
             try {
                 toServer.write(inputToServer);
-                System.out.println("Waiting for the move");
+                //System.out.println("Waiting for the move");
 
                 int selectedMove = fromServer.read();
-                System.out.println("This was the selected move index: " + selectedMove);
-                System.out.println(moveList[selectedMove].getX()+ " " + moveList[selectedMove].getY());
+                //System.out.println("This was the selected move index: " + selectedMove);
+                //System.out.println(moveList[selectedMove].getX()+ " " + moveList[selectedMove].getY());
                 playerMadeMove.set(moveList[selectedMove]);
             } catch (IOException ex) {
                 Logger.getLogger(RemoteComputerPlayer.class.getName()).log(Level.SEVERE, null, ex);

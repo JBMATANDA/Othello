@@ -68,7 +68,7 @@ public class GameBoard {
         private void theClick(GetMove getMove) {
             try {
                 int[] coordinatesXY = {this.column, this.row};
-                System.out.println(coordinatesXY[0] + "  " + coordinatesXY[1]);
+                //System.out.println(coordinatesXY[0] + "  " + coordinatesXY[1]);
                 
                 //GetMove.getMove().put(this.column, this.row);
                 getMove.put(this.column, this.row);

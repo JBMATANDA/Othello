@@ -48,9 +48,9 @@ public class LocalComputerPlayer extends Player{
         
         @Override
         public void run() {
-            printMoveList(moveList);
+            //printMoveList(moveList);
             try {
-                Thread.sleep(1);
+                Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(LocalComputerPlayer.class.getName()).log(Level.SEVERE, null, ex);
             }

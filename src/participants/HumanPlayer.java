@@ -45,7 +45,7 @@ public class HumanPlayer extends Player{
         @Override
         public void run() {
             try {
-                printMoveList(moveList);
+                //printMoveList(moveList);
                 Move move;
                 
                 

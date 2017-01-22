@@ -55,7 +55,7 @@ public class GameFrame{
     }
     
     private void updateView(int[][] gameGrid){
-        System.out.println("\n\tUPDATING VIEW\t\n");
+        //System.out.println("\n\tUPDATING VIEW\t\n");
         pane.setCenter(board.createBoard(gameGrid)); 
         pane.setLeft(vBox);
     }
