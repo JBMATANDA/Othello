@@ -45,12 +45,7 @@ public class ServerOthello {
             try {
                 ServerSocket serverSocket = new ServerSocket(port);
                 while(true){
-                    Socket clientSocket = serverSocket.accept();
-//                    clientNo++;
-                    //Platform.runLater( () -> {
-                        //InetAddress clientConnectInfo = clientSocket.getInetAddress();
-                        //DatabaseManager.updateDatabaseTable(clientNo, clientConnectInfo.getHostAddress(), port);
-                    //});                   
+                    Socket clientSocket = serverSocket.accept();           
                     new Thread(new ClientService(clientSocket)).start();
                 }               
             } catch (IOException ex) {               

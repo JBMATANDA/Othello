@@ -49,12 +49,7 @@ public class HumanPlayer extends Player{
             try {
                 printMoveList(moveList);
                 Move move;
-                System.out.println("Player " + getName() + " Enter x");
                 
-                
-//                int x = in.nextInt();
-                System.out.println("Player " + getName() + " Enter y");
-//                int y = in.nextInt();
                 
                 int[] moveInt = getMove.take();
                 int x = moveInt[0];

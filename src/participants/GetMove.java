@@ -8,8 +8,6 @@ package participants;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -24,12 +22,7 @@ public class GetMove {
     private Integer x = null;
     private Integer y = null;
     
-    private static GetMove getMove = new GetMove();
-    //private GetMove(){}
-    
-    public static GetMove getMove(){
-        return getMove;
-    }
+
     
     
     public void put(int newX, int newY) throws InterruptedException{

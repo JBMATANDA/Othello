@@ -37,7 +37,6 @@ public class RemoteComputerPlayer extends  Player{
 
             int portNumber = Integer.valueOf(details[1]);
             Socket socket = new Socket(ipAdress, portNumber);
-//            Socket socket = new Socket("localhost", 8000);
 
             fromServer = new DataInputStream(socket.getInputStream());
             toServer = new DataOutputStream(socket.getOutputStream());
@@ -78,8 +77,6 @@ public class RemoteComputerPlayer extends  Player{
                
             try {
                 toServer.write(inputToServer);
-                //toServer.flush();
-                //Thread.sleep(1000);
                 System.out.println("Waiting for the move");
 
                 int selectedMove = fromServer.read();
