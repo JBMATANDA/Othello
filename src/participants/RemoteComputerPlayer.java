@@ -47,19 +47,22 @@ public class RemoteComputerPlayer extends  Player{
     }
 
     @Override
-    public void getMove(Move[] moveList, ObjectProperty<Move> playerMadeMove) {
-        
-        new Thread(new MoveMaker(moveList, playerMadeMove)).start();
+    public void getMove(Move[] moveList, ObjectProperty<Move> playerMadeMove, GetMove getMove) {
+
+        new Thread(new MoveMaker(moveList, playerMadeMove, getMove)).start();
+
     }
     
     private class MoveMaker implements Runnable{
 
         private Move[] moveList;
         private ObjectProperty<Move> playerMadeMove;
+        private GetMove getMove;
         
-        public MoveMaker(Move[] moveList, ObjectProperty<Move> playerMadeMove){
+        public MoveMaker(Move[] moveList, ObjectProperty<Move> playerMadeMove, GetMove getMove){
             this.moveList = moveList;
             this.playerMadeMove = playerMadeMove;
+            this.getMove = getMove;
         }
         
         @Override

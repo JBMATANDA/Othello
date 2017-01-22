@@ -1,5 +1,7 @@
 package othello.interfaces;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.*;
 import javafx.stage.Stage;
@@ -12,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
+import participants.GetMove;
 
 public class GameBoard {
 
@@ -19,6 +22,7 @@ public class GameBoard {
     private Label status;
     private GridPane pane;
     private int size = 8;
+    private GetMove getMove;
 
     public GameBoard() {
         cell = new Cell[8][8];
@@ -35,11 +39,15 @@ public class GameBoard {
             for (int column = 0; column < size; column++) {
 
                 Cell square = new Cell(column, row, grid[column][row]);
-                square.setOnMouseClicked(e -> square.theClick());
+                square.setOnMouseClicked(e -> square.theClick(getMove));
                 pane.add(cell[column][row] = square, column, row);
             }
         }
         return pane;
+    }
+    
+    public void setGetMove(GetMove getMove){
+        this.getMove = getMove;
     }
 
     class Cell extends Pane {
@@ -65,10 +73,17 @@ public class GameBoard {
             }
         }
 
-        private int[] theClick() {
-            int[] coordinatesXY = {this.column, this.row};
-            System.out.println(coordinatesXY[0] + "  " + coordinatesXY[1]);
-            return coordinatesXY;
+        private void theClick(GetMove getMove) {
+            try {
+                int[] coordinatesXY = {this.column, this.row};
+                System.out.println(coordinatesXY[0] + "  " + coordinatesXY[1]);
+                
+                getMove.put(this.column, this.row);
+                
+                //return coordinatesXY;
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         private Ellipse setPiece(int markerID) {

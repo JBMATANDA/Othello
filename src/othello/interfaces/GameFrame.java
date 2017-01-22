@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import othello.GameGridProperty;
+import participants.GetMove;
 
 public class GameFrame{
 
@@ -27,10 +28,11 @@ public class GameFrame{
     private final Button btNew = new Button("New Game");
     
 
-    public GameFrame(Stage primaryStage, GameGridProperty gridProperty) {        
+    public GameFrame(Stage primaryStage, GameGridProperty gridProperty, GetMove getMove) {        
         Scene scene = new Scene(pane, 600, 500);
         primaryStage.setTitle("Othello");
         primaryStage.setScene(scene);
+        board.setGetMove(getMove);
         vBox = getVBox();
         updateView(gridProperty.getValue());
         bindViewToModel(gridProperty);

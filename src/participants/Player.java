@@ -31,7 +31,7 @@ public  abstract class Player {
      * @param playerMadeMove 
      */
     
-    public abstract void getMove(Move[] moveList, ObjectProperty<Move> playerMadeMove);
+    public abstract void getMove(Move[] moveList, ObjectProperty<Move> playerMadeMove, GetMove getMove);
     
     public String getName(){
         return name;

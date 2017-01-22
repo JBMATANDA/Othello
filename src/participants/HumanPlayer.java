@@ -4,8 +4,11 @@ Då nästa drag begärs från GameManager väntar man tills användaren utfört 
 package participants;
 
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.ObjectProperty;
 import othello.Move;
+
 
 /**
  *
@@ -21,10 +24,10 @@ public class HumanPlayer extends Player{
     }
 
     @Override
-    public void getMove(Move[] moveList, ObjectProperty<Move> playerMadeMove) {
+    public void getMove(Move[] moveList, ObjectProperty<Move> playerMadeMove, GetMove getMove) {
 
 
-        new Thread(new MoveMaker(moveList, playerMadeMove)).start();
+        new Thread(new MoveMaker(moveList, playerMadeMove, getMove)).start();
         
 
     }
@@ -33,24 +36,36 @@ public class HumanPlayer extends Player{
 
         private Move[] moveList;
         private ObjectProperty<Move> playerMadeMove;
+        private GetMove getMove;
         
-        public MoveMaker(Move[] moveList, ObjectProperty<Move> playerMadeMove){
+        public MoveMaker(Move[] moveList, ObjectProperty<Move> playerMadeMove, GetMove getMove){
             this.moveList = moveList;
             this.playerMadeMove = playerMadeMove;
+            this.getMove = getMove;
         }
         
         @Override
         public void run() {
-            printMoveList(moveList);
-            Move move;
-            System.out.println("Player " + getName() + " Enter x");
-            int x = in.nextInt();
-            System.out.println("Player " + getName() + " Enter y");
-            int y = in.nextInt();
-            
-            move = new Move(x, y, getMarkerId());
-            
-            this.playerMadeMove.set(move);
+            try {
+                printMoveList(moveList);
+                Move move;
+                System.out.println("Player " + getName() + " Enter x");
+                
+                
+//                int x = in.nextInt();
+                System.out.println("Player " + getName() + " Enter y");
+//                int y = in.nextInt();
+                
+                int[] moveInt = getMove.take();
+                int x = moveInt[0];
+                int y = moveInt[1];
+                
+                move = new Move(x, y, getMarkerId());
+                
+                this.playerMadeMove.set(move);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(HumanPlayer.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
     }

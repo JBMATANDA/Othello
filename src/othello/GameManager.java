@@ -13,6 +13,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.stage.Stage;
 import othello.interfaces.GameFrame;
+import participants.GetMove;
 import participants.Player;
 
 /**
@@ -30,6 +31,7 @@ public class GameManager {
 
     private ObjectProperty<Move> playerMadeMove = new SimpleObjectProperty<>(); //Property som vi skickar med varje gång en spelare ska göra ett move (dvs vi anropar getmove) i getmove så har vi en set, vilket aktiverar vår lyssnare i run()
     private ObjectProperty<int[]> humanClick = new SimpleObjectProperty<>();
+    private GetMove getMove = new GetMove();
     
     private int currentPlayer = 0;
 
@@ -58,11 +60,14 @@ public class GameManager {
 
     public void run() {
         board.printBoard();
-        playerList[currentPlayer].getMove(board.getLegalMoves(playerList[currentPlayer]), playerMadeMove);          //Sätts längst ner efter lyssnaren, så att lyssnaren ska ha tid att fästa sig. Annars ifall det här kommer först så kan getmove hinna exekvera klart på sin egen tråd innan lyssnaren har satt sig, och då har den inga instruktioner och set() triggar inte något.
+        playerList[currentPlayer].getMove(board.getLegalMoves(playerList[currentPlayer]), playerMadeMove, getMove);          //Sätts längst ner efter lyssnaren, så att lyssnaren ska ha tid att fästa sig. Annars ifall det här kommer först så kan getmove hinna exekvera klart på sin egen tråd innan lyssnaren har satt sig, och då har den inga instruktioner och set() triggar inte något.
     }
 
     public GameGridProperty getGameGridProperty() {
         return board.gridProperty();
+    }
+    public GetMove getGetMove(){
+        return getMove;
     }
 
     public void setFrame(GameFrame frame) {
@@ -74,7 +79,7 @@ public class GameManager {
             Move move = this.playerMadeMove.get();                              //Inuti får vi ett move-objekt genom get (som fick det från set)
             if (!board.isLegalMove(move)) {
                 System.out.println("Move was not legal! Try again.");
-                playerList[currentPlayer].getMove(board.getLegalMoves(playerList[currentPlayer]), playerMadeMove);       //ifall det inte gick så anropar vi getMove, vilket anropar set, som tar oss tillbaka till lyssnaren
+                playerList[currentPlayer].getMove(board.getLegalMoves(playerList[currentPlayer]), playerMadeMove, getMove);       //ifall det inte gick så anropar vi getMove, vilket anropar set, som tar oss tillbaka till lyssnaren
             } else {
                 board.addToGrid(move);
                 board.printBoard();
@@ -92,7 +97,7 @@ public class GameManager {
         if (!(board.checkForLegalMoves(playerList[currentPlayer]))) {
             nextTurn();
         }
-        playerList[currentPlayer].getMove(board.getLegalMoves(playerList[currentPlayer]), playerMadeMove);
+        playerList[currentPlayer].getMove(board.getLegalMoves(playerList[currentPlayer]), playerMadeMove, getMove);
     }
 
     private void nextTurn() {
