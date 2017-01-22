@@ -2,12 +2,6 @@ package othello.interfaces;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Application;
-import javafx.event.*;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -19,14 +13,12 @@ import participants.GetMove;
 public class GameBoard {
 
     private Cell[][] cell;
-    private Label status;
     private GridPane pane;
     private int size = 8;
     private GetMove getMove;
 
     public GameBoard() {
         cell = new Cell[8][8];
-        status = new Label("Black's turn to play");
         pane = new GridPane();
     }
 
@@ -78,44 +70,13 @@ public class GameBoard {
                 int[] coordinatesXY = {this.column, this.row};
                 System.out.println(coordinatesXY[0] + "  " + coordinatesXY[1]);
                 
-                getMove.put(this.column, this.row);
+                GetMove.getMove().put(this.column, this.row);
                 
                 //return coordinatesXY;
             } catch (InterruptedException ex) {
                 Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
-        private Ellipse setPiece(int markerID) {
-            Ellipse piece = new Ellipse(this.getWidth() / 2,
-                    this.getHeight() / 2, this.getWidth() / 2 - 10,
-                    this.getHeight() / 2 - 10);
-
-            piece.radiusXProperty().bind(
-                    this.widthProperty().divide(2).subtract(10));
-            piece.radiusYProperty().bind(
-                    this.heightProperty().divide(2).subtract(10));
-            piece.centerXProperty().bind(
-                    this.widthProperty().divide(2));
-            piece.centerYProperty().bind(
-                    this.heightProperty().divide(2));
-            switch (markerID) {
-                case 1:
-                    piece.setFill(Color.BLACK);
-                    piece.setStroke(Color.WHITE);
-                    break;
-                case 2:
-                    piece.setFill(Color.WHITE);
-                    piece.setStroke(Color.BLACK);
-                    break;
-                default:
-                    piece.setFill(Color.TRANSPARENT);
-                    piece.setStroke(Color.TRANSPARENT);
-                    break;
-            }
-            return piece;
-        }
-
     }
 
     static class DrawChip {
@@ -138,39 +99,8 @@ public class GameBoard {
             return chip;
         }
 
-        public void highLightSquare(int x, int y, GridPane gridPane) {
 
-            StackPane highSquare = new StackPane();
 
-            highSquare.setStyle("-fx-border-color: " + "BLUE" + ";");
-            gridPane.add(highSquare, x, y);
-
-        }
-
-        public Circle fixBoardSize() {
-
-            Circle fixSize;
-            fixSize = new Circle(40, 40, 20);
-
-            return fixSize;
-        }
-
-        /* This method shows a node's info 
-         public Node getNode(final int row, final int column, GridPane gridPane) {
-
-         Node result = null;
-
-         ObservableList <Node> children = gridPane.getChildren();
-
-         for (Node node : children) {
-
-         if (gridPane.getRowIndex(node) == row && gridPane.getColumnIndex(node) == column) {
-         result = node;
-         break;
-         }
-         }
-         return result;
-         }   */
     }
 
 }

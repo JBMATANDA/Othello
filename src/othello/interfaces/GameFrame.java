@@ -27,6 +27,12 @@ public class GameFrame{
     private final Button btEnd = new Button("End Game");
     private final Button btNew = new Button("New Game");
     
+    
+    private DrawnDialog dd;
+    private WinnerDialog wd;
+    
+    
+    
 
     public GameFrame(Stage primaryStage, GameGridProperty gridProperty, GetMove getMove) {        
         Scene scene = new Scene(pane, 600, 500);
@@ -36,7 +42,11 @@ public class GameFrame{
         vBox = getVBox();
         updateView(gridProperty.getValue());
         bindViewToModel(gridProperty);
-        //DrawnDialog draw = new DrawnDialog(primaryStage);
+        //dd = new DrawnDialog(primaryStage);
+        
+        
+        
+        
     }
     
     public void bindViewToModel(GameGridProperty gridProperty){

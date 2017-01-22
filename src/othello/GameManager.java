@@ -27,7 +27,6 @@ public class GameManager {
     private Player[] playerList;
 
     private GameFrame frame;
-    private Stage primaryStage = new Stage();
 
     private ObjectProperty<Move> playerMadeMove = new SimpleObjectProperty<>(); //Property som vi skickar med varje gång en spelare ska göra ett move (dvs vi anropar getmove) i getmove så har vi en set, vilket aktiverar vår lyssnare i run()
     private ObjectProperty<int[]> humanClick = new SimpleObjectProperty<>();
@@ -109,12 +108,13 @@ public class GameManager {
         System.out.println("Player 2: " + board.getScore(2));
         System.out.println("Winner: " + board.getWinner());
         int winner = board.getWinner();
-        if (winner == 0) {
-            frame.gameOver();
-        } else {
+
+        //if (winner == 0) {
+//            frame.gameOver();
+/*        } else {
             frame.gameOver(playerList[winner - 1].getName());
         }
-
+*/
     }
 
 }
