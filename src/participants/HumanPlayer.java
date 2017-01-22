@@ -49,7 +49,8 @@ public class HumanPlayer extends Player{
                 Move move;
                 
                 
-                int[] moveInt = GetMove.getMove().take();
+                //int[] moveInt = GetMove.getMove().take();
+                int[] moveInt = getMove.take();
                 int x = moveInt[0];
                 int y = moveInt[1];
                 

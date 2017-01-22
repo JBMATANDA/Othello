@@ -70,7 +70,8 @@ public class GameBoard {
                 int[] coordinatesXY = {this.column, this.row};
                 System.out.println(coordinatesXY[0] + "  " + coordinatesXY[1]);
                 
-                GetMove.getMove().put(this.column, this.row);
+                //GetMove.getMove().put(this.column, this.row);
+                getMove.put(this.column, this.row);
                 
                 //return coordinatesXY;
             } catch (InterruptedException ex) {

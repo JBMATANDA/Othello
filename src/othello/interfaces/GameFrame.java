@@ -26,7 +26,7 @@ public class GameFrame{
     private final VBox vBox; 
     private final Button btEnd = new Button("End Game");
     private final Button btNew = new Button("New Game");
-    
+    private final Stage stage; 
     
     private DrawnDialog dd;
     private WinnerDialog wd;
@@ -38,6 +38,7 @@ public class GameFrame{
         Scene scene = new Scene(pane, 600, 500);
         primaryStage.setTitle("Othello");
         primaryStage.setScene(scene);
+        this.stage = primaryStage;
         board.setGetMove(getMove);
         vBox = getVBox();
         updateView(gridProperty.getValue());
@@ -65,8 +66,11 @@ public class GameFrame{
         vBox.setStyle("-fx-background-color: darkgreen");
         vBox.getChildren().add(btNew);
         vBox.getChildren().add(btEnd);
-//        btNew.setOnAction();
-//        btEnd.setOnAction();
+        btNew.setOnAction(e -> {
+        SetUpGameDialog setup = new SetUpGameDialog(this.stage);
+        setup.setUpGameDialogFrame();
+        });
+        btEnd.setOnAction(e -> Platform.exit());
         
         return vBox;
     }
