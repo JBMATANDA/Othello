@@ -55,7 +55,7 @@ public class LocalComputerPlayer extends Player{
                 Logger.getLogger(LocalComputerPlayer.class.getName()).log(Level.SEVERE, null, ex);
             }
             int selectedMove = rng.nextInt(moveList.length);
-            System.out.println(moveList[selectedMove].getX()+ " " + moveList[selectedMove].getY());
+            //System.out.println(moveList[selectedMove].getX()+ " " + moveList[selectedMove].getY());
             playerMadeMove.set(moveList[selectedMove]);
         }
     }

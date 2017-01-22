@@ -6,7 +6,8 @@
 package othello;
 
 /**
- *
+ * This class is used to store coordinates and the identity of the player who
+ * made the move
  * @author S153298
  */
 public class Move {

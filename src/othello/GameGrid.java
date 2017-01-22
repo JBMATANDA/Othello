@@ -1,7 +1,8 @@
 
 package othello;
 /**
- *
+ * This class contains all the the grid-related functions, but the actual
+ * grid is hidden inside the GameGridProperty, which has private access.
  * @author S153298
  */
 import java.util.ArrayList;
@@ -9,7 +10,6 @@ import participants.Player;
 
 public class GameGrid {
     
-    //Den här klassen är ett gränssnit
     
     //private int[][] grid;
     private GameGridProperty gridProperty = new GameGridProperty();

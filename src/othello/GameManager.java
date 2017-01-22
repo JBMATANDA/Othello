@@ -17,7 +17,8 @@ import participants.GetMove;
 import participants.Player;
 
 /**
- *
+ * This class is used to run the game. Each match is given its own instance of
+ * this class.
  * @author S153298
  */
 public class GameManager {
@@ -36,19 +37,6 @@ public class GameManager {
     
     private int currentPlayer = 0;
 
-    /*
-     TODO
-     - Run new turn
-     - Select next player
-     - Prompt new move until one is legal
-     - Make move on board
-     - Run match that makes new turns until someone wins or loses
-     - New turn
-     - Continue making new turn when a move is succesfully made in the GameGrid (board).
-    
-     - Run method gameOver when someone lost or won or draw etc.
-            
-     */
     public GameManager(Player white, Player black) {
         board = new GameGrid();
 
@@ -61,7 +49,6 @@ public class GameManager {
 
     public void run() {
         gameIsOn.set(true);
-        //board.printBoard();
         playerList[currentPlayer].getMove(board.getLegalMoves(playerList[currentPlayer]), playerMadeMove, getMove);
     }
 
@@ -77,6 +64,9 @@ public class GameManager {
         this.frame.bindGameOnProperty(gameIsOn);
     }
 
+    
+    
+    
     private void addTheObjectPropertyListener() {
         this.playerMadeMove.addListener(e -> {                                  //varje gång getMove anropas så aktiveras set(se player-klassen), vilket lyssnaren ser.
             BooleanProperty gameIsOn = this.gameIsOn;
@@ -111,9 +101,7 @@ public class GameManager {
     }
 
     private void gameOver() {
-        //System.out.println("Player 1: " + board.getScore(1));
-        //System.out.println("Player 2: " + board.getScore(2));
-        //System.out.println("Winner: " + board.getWinner());
+        
         int winner = board.getWinner();
 
         if (winner == 0) {

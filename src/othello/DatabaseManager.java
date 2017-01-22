@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- *
+ * 
  * @author S153298
  */
 public class DatabaseManager {
